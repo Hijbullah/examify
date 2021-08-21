@@ -88,28 +88,6 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     });
 
-    Route::prefix('teachers')->name('teachers.')->middleware('teacher')->group(function() {
-
-        Route::get('/', function () {
-            return Inertia::render('Teacher/Dashboard');
-        })->name('dashboard');
-
-        Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-        Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
-
-        Route::get('/password', [ProfileController::class, 'changePassword'])->name('password.change');
-        Route::put('/password/update', [ProfileController::class, 'updatePassword'])->name('password.update');
-
-        Route::get('/schedules', [ClassScheduleController::class, 'index'])->name('schedules.index');
-        Route::get('/schedules/{schedule:class_id}', [ClassScheduleController::class, 'show'])->name('schedules.show');
-        //notes
-        Route::get('/schedules/{schedule}/notes', [ClassScheduleController::class, 'showClassNotes'])->name('schedules.notes');
-        Route::post('/schedules/{schedule}/notes', [ClassScheduleController::class, 'uploadClassNote']);
-        //Route::get('/notes/{schedule}/download-all', [ClassScheduleController::class, 'downloadAllNotes'])->name('notes.download.all');
-        //Route::get('/notes/{media}/download-single', [ClassScheduleController::class, 'downloadSingleNote'])->name('notes.download.single');
-        Route::delete('/notes/media/{media}', [ClassScheduleController::class, 'deleteClassNote'])->name('notes.destroy');
-    }); 
-
     Route::get('/notes/{schedule}/download-all', [ClassScheduleController::class, 'downloadAllNotes'])->name('notes.download.all');
     Route::get('/notes/{media}/download-single', [ClassScheduleController::class, 'downloadSingleNote'])->name('notes.download.single');
     

@@ -24,14 +24,13 @@ class SubjectController extends Controller
             'subjects' => Subject::filter(request()->only('search'))
                 ->latest()
                 ->paginate(10)
-                ->transform(function ($subject) {
-                    return [
-                        'id' => $subject->id,
-                        'name' => $subject->name,
-                        'slug' => $subject->slug,
-                        'status' => $subject->status
-                    ];
-                })
+                ->withQueryString()
+                ->through(fn ($subject) => [
+                    'id' => $subject->id,
+                    'name' => $subject->name,
+                    'slug' => $subject->slug,
+                    'status' => $subject->status
+                ])
         ]);
     }
 
