@@ -21,11 +21,13 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Admin/User/Index', [
-            'users' => User::where('type', 'admin')
-                        ->orWhere('type', 'teacher')
+            'filters' => request()->all('search'),
+            'users' => User::filter(request()->only('search'))
+                        ->where('type', 'admin')
                         ->latest()
                         ->paginate(10)
-                        ->transform(function($user) {
+                        ->withQueryString()
+                        ->through(function($user) {
                             return [
                                 'id' => $user->id,
                                 'name' => $user->full_name,
@@ -60,7 +62,6 @@ class UserController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['nullable', 'min:11' ,'max:14', 'unique:users'],
-            'type' => ['required'],
             'password' => ['required', 'string', 'confirmed',' min:8']
         ])->validate();
 
@@ -69,7 +70,7 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'type' => $request->type,
+            'type' => 'admin',
             'password' => Hash::make($request->password),
         ]);
 

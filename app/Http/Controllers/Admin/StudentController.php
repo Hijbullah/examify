@@ -21,7 +21,7 @@ class StudentController extends Controller
                             ->where('is_approved', true)
                             ->latest()
                             ->paginate(10)
-                            ->transform(function ($application) {
+                            ->through(function ($application) {
                                 return [
                                     'id' => $application->id,
                                     'name' => $application->first_name. ' ' . $application->last_name,
@@ -51,7 +51,7 @@ class StudentController extends Controller
                             ->where('is_approved', false)
                             ->latest()
                             ->paginate(10)
-                            ->transform(function ($application) {
+                            ->through(function ($application) {
                                 return [
                                     'id' => $application->id,
                                     'name' => $application->first_name. ' ' . $application->last_name,

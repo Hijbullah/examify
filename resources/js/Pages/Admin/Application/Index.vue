@@ -31,7 +31,7 @@
                         
                             
                             <td class="border-t px-6 py-2 text-center space-x-2">
-                                <inertia-link 
+                                <Link
                                     :href="route('admin.applications.show', application.id)" 
                                     class="inline-flex text-gray-800 hover:text-gray-500 focus:outline-none"
                                 >
@@ -39,7 +39,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
-                                </inertia-link>
+                                </Link>
                               
                             </td>
                         </tr>
@@ -50,7 +50,7 @@
                     </table>
                 </div>
 
-                <pagination v-if="applications.data.length" :links="applications.links" />
+                <pagination :links="applications.links" />
             </div>
         </div>
     </admin-layout>
@@ -59,11 +59,13 @@
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
     import Pagination from '@/Components/Shared/Pagination'
+    import { Link } from '@inertiajs/inertia-vue3'
 
     export default {
         components: {
             AdminLayout,
             Pagination,
+            Link
         },
         props: {
             applications: Object,
