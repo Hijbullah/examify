@@ -1,18 +1,18 @@
 <template>
     <admin-layout>
         <div>
-            <h2 class="text-xl text-gray-900 font-semibold border-b-2 border-gray-900">All Exam Categories</h2>
+            <h2 class="text-xl text-gray-900 font-semibold border-b-2 border-gray-900">All Categories</h2>
 
             <div class="mt-5">
                 <div class="mb-6 flex justify-between items-center">
                     <search-filter v-model="form.search" class="w-full max-w-lg mr-4" @reset="reset"></search-filter>
                     <div>
-                        <inertia-link 
+                        <Link 
                             :href="route('admin.exam-categories.create')" 
                             class="btn-main px-3 py-2 text-sm font-semibold uppercase tracking-widest"
                         >
                             Create
-                        </inertia-link>
+                        </Link>
                     </div>
                 </div>
 
@@ -29,14 +29,14 @@
                             </td>
 
                             <td class="border-t px-6 py-2 text-center space-x-2">
-                                <inertia-link 
+                                <Link
                                     :href="route('admin.exam-categories.edit', category.slug)" 
                                     class="inline-flex text-gray-800 hover:text-gray-500 focus:outline-none"
                                 >
                                     <svg class="h-5 w-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
-                                </inertia-link>
+                                </Link>
 
                                 <button 
                                     class="inline-flex text-red-500 hover:text-red-700 focus:outline-none"
@@ -57,7 +57,7 @@
                     </table>
                 </div>
 
-                <pagination v-if="categories.data.length" :links="categories.links" />
+                <pagination :links="categories.links" />
             </div>
         </div>
     </admin-layout>
@@ -67,12 +67,15 @@
     import AdminLayout from '@/Layouts/AdminLayout'
     import Pagination from '@/Components/Shared/Pagination'
     import SearchFilter from '@/Components/Shared/SearchFilter'
+    import { Link } from '@inertiajs/inertia-vue3'
 
     export default {
+        
         components: {
             AdminLayout,
             Pagination,
-            SearchFilter
+            SearchFilter,
+            Link
         },
         props: {
             categories: Object,
@@ -87,11 +90,10 @@
         },
         watch: {
             form: {
-                handler: _.throttle(function() {
-                    let query = _.pickBy(this.form);
-                    this.$inertia.replace(route('admin.exam-categories.index', Object.keys(query).length ? query : { remember: 'forget' }))
-                }, 150),
                 deep: true,
+                handler: _.throttle(function() {
+                    this.$inertia.get(route('admin.exam-categories.index'), _.pickBy(this.form), { preserveState: true })
+                }, 150),
             },
         },
         methods: {

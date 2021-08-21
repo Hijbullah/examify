@@ -24,13 +24,12 @@ class ExamCategoryController extends Controller
             'categories' => ExamCategory::filter(request()->only('search'))
                 ->latest()
                 ->paginate(10)
-                ->transform(function ($examCategory) {
-                    return [
-                        'id' => $examCategory->id,
-                        'name' => $examCategory->name,
-                        'slug' => $examCategory->slug
-                    ];
-                })
+                ->withQueryString()
+                ->through(fn ($examCategory) => [
+                    'id' => $examCategory->id,
+                    'name' => $examCategory->name,
+                    'slug' => $examCategory->slug
+                ])
         ]);
     }
 

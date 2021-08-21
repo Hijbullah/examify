@@ -6,18 +6,18 @@
                 <form @submit.prevent="create">
                   
                     <div>
-                        <jet-label for="name" value="Category Name" />
-                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Category Name..." autocomplete="name" />
-                        <jet-input-error :message="form.errors.name" class="mt-2" />
+                        <app-label for="name" value="Category Name" />
+                        <app-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Category Name..." autocomplete="name" />
+                        <app-input-error :message="form.errors.name" class="mt-2" />
                     </div>
 
                     <div class="mt-4">
-                        <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <app-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Save
-                        </jet-button>
-                        <jet-secondary-button @click.native.prevent="goBack">
+                        </app-button>
+                        <app-secondary-button class="ml-2" @click.prevent="goBack">
                             Back
-                        </jet-secondary-button>
+                        </app-secondary-button>
                     </div>
                 </form>
             </div>
@@ -28,22 +28,22 @@
 
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
-    import JetInput from '@/Components/Shared/FormElement/Input'
-    import JetInputError from '@/Components/Shared/FormElement/InputError'
-    import JetLabel from '@/Components/Shared/FormElement/Label'
-    import JetCheckbox from '@/Components/Shared/FormElement/Checkbox'
-    import JetButton from '@/Components/Shared/Button/Button'
-    import JetSecondaryButton from '@/Components/Shared/Button/SecondaryButton'
+    import AppInput from '@/Components/Shared/FormElement/Input'
+    import AppInputError from '@/Components/Shared/FormElement/InputError'
+    import AppLabel from '@/Components/Shared/FormElement/Label'
+    import AppCheckbox from '@/Components/Shared/FormElement/Checkbox'
+    import AppButton from '@/Components/Shared/Button/Button'
+    import AppSecondaryButton from '@/Components/Shared/Button/SecondaryButton'
 
     export default {
         components: {
             AdminLayout,
-            JetInput,
-            JetInputError,
-            JetLabel,
-            JetCheckbox,
-            JetButton,
-            JetSecondaryButton
+            AppInput,
+            AppInputError,
+            AppLabel,
+            AppCheckbox,
+            AppButton,
+            AppSecondaryButton
         },
         
         data() {
