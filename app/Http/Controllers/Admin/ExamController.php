@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Exam;
 use Inertia\Inertia;
+use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Subject;
 use Illuminate\Support\Str;
@@ -31,7 +32,8 @@ class ExamController extends Controller
                 ->withCount('questions')
                 ->latest()
                 ->paginate(10)
-                ->transform(function ($exam) {
+                ->withQueryString()
+                ->through(function ($exam) {
                     return [
                         'id' => $exam->id,
                         'exam_code' => $exam->exam_code,
@@ -51,6 +53,23 @@ class ExamController extends Controller
     }
 
     /**
+     *  Display a listing of the Batch resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getBatches($courseId)
+    {
+        $batches = Batch::where('course_id', $courseId)->select('id', 'name')
+            ->get()
+            ->transform(fn($batch) => [
+                'value' => $batch->id,
+                'label' => $batch->name
+            ]);
+
+        return response()->json($batches);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -58,9 +77,19 @@ class ExamController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Exam/Create', [
-            'courses' => Course::all()->map->only('id', 'name'),
-            'subjects' => Subject::all()->map->only('id', 'name'),
-            'categories' => ExamCategory::all()->map->only('id', 'name'),
+            'courses' => Course::select('id', 'name')->get()->transform(fn($course) => [
+                'value' => $course->id,
+                'label' => $course->name  
+            ]),
+            'subjects' => Subject::select('id', 'name')->get()->transform(fn($subject) => [
+                'value' => $subject->id,
+                'label' => $subject->name,
+                'disabled' => false  
+            ]),
+            'categories' => ExamCategory::select('id', 'name')->get()->transform(fn($category) => [
+                'value' => $category->id,
+                'label' => $category->name  
+            ]),
         ]);
     }
 
@@ -71,8 +100,7 @@ class ExamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    { 
         Validator::make($request->all(), [
             'name' => ['required', 'unique:exams', 'max:255'],
             'course' => ['required'],

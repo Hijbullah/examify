@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         ]);
         Route::resource('subjects', SubjectController::class);
         Route::resource('schedules', ScheduleController::class);
-        Route::get('/get-batches/{courseId}', [ScheduleController::class, 'getBatches']);
+        // Route::get('/get-batches/{courseId}', [ScheduleController::class, 'getBatches']);
 
         //lecture sheet
         Route::resource('lecture-sheets', LectureSheetController::class);
@@ -63,9 +63,12 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::resource('users', UserController::class); // admin and teacher
 
         Route::resource('exam-categories', ExamCategoryController::class);
+
         //exam
         Route::put('/exams/{exam}/publish', [ExamController::class, 'toogleExamPublication'])->name('exams.publish');
         Route::resource('exams', ExamController::class);
+        Route::get('/get-batches/{courseId}', [ExamController::class, 'getBatches']);
+
         // questions
         Route::get('/exams/{exam}/questions', [QuestionController::class, 'index'])->name('questions.index');
         Route::get('/exams/{exam}/questions/create/{type}', [QuestionController::class, 'create'])

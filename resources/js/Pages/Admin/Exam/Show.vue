@@ -6,32 +6,32 @@
             <div class="mt-5">
                 <div class="mb-6 flex justify-end items-center space-x-2">
                     <p v-if="isExamClosed" class="text-xl font-bold">Exam is Closed</p>
-                    <inertia-link 
+                    <Link 
                         :href="route('admin.questions.index', exam.exam_code)" 
                         class="btn-main px-3 py-2 text-sm font-semibold uppercase tracking-widest"
                     >
                         Questions
-                    </inertia-link>
-                    <inertia-link 
+                    </Link>
+                    <Link 
                         :href="route('admin.exams.results', exam.exam_code)" 
                         class="btn-main px-3 py-2 text-sm font-semibold uppercase tracking-widest"
                     >
                         Results
-                    </inertia-link>
-                    <inertia-link 
+                    </Link>
+                    <Link 
                         v-if="exam.status === 'pending'"
                         :href="route('admin.exams.edit', exam.exam_code)" 
                         class="btn-main px-3 py-2 text-sm font-semibold uppercase tracking-widest"
                     >
                         Edit
-                    </inertia-link>
+                    </Link>
 
-                    <inertia-link 
+                    <Link 
                         :href="route('admin.exams.index')" 
                         class="btn-main px-3 py-2 text-sm font-semibold uppercase tracking-widest"
                     >
                         Back
-                    </inertia-link>
+                    </Link>
                 </div>
 
                 <div class="flex space-x-5">
@@ -58,12 +58,12 @@
                            </div>
                        </div>
                        <div class="mt-3">
-                           <inertia-link 
+                           <Link 
                                 :href="route('admin.questions.index', exam.exam_code)" 
                                 class="btn-main px-3 py-2 text-xs font-semibold uppercase tracking-widest"
                             >
                                 Go To Questions
-                            </inertia-link>
+                            </Link>
                        </div>
                    </div>
                 </div>
@@ -85,13 +85,13 @@
                             <p v-if="!hasEnoughQuestions" class="mb-3 text-sm font-light text-red-500 leading-tight">Warning: You have not added enough questions for this exam. Add Question before publish exam.</p>
                             <p v-else class="mb-3 text-sm font-light text-green-500 leading-tight">Exam can be published now!</p>
                             <p v-if="isExamPublished" class="mb-3 text-sm">Exam can't be edited when it is published.</p>
-                            <inertia-link 
+                            <Link 
                                 v-if="!hasEnoughQuestions"
                                 :href="route('admin.questions.index', exam.exam_code)" 
                                 class="btn-main mr-2 px-3 py-2 text-xs font-semibold uppercase tracking-widest"
                             >
                                 Add Questions
-                            </inertia-link>
+                            </Link>
 
                             <button 
                                 class="btn-main px-3 py-2 text-xs font-semibold uppercase tracking-widest disabled:opacity-50"
@@ -120,10 +120,12 @@
 
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
+    import { Link } from "@inertiajs/inertia-vue3"
 
     export default {
         components: {
-            AdminLayout
+            AdminLayout,
+            Link
         },
         props: {
             exam: Object,

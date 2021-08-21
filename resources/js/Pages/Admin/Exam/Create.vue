@@ -6,78 +6,64 @@
                 <form @submit.prevent="create">
                     <div class="flex space-x-3">
                         <div class="w-1/2">
-                            <jet-label value="Course" />
-                            <!-- <vue-select 
-                                class="vue_select_box mt-1"
-                                placeholder="Choose a Course"
-                                :options="courses" 
-                                label="name" 
-                                :reduce="course => course.id" 
+                            <app-label value="Course" />
+                            <Multiselect
                                 v-model="form.course"
-                            >
-                            </vue-select>                         -->
-                            <jet-input-error :message="form.errors.course" class="mt-2" />
+                                :options="courses"
+                                :searchable="true"
+                                placeholder="Choose a Course"
+                            />                   
+                            <app-input-error :message="form.errors.course" class="mt-2" />
                         </div>
 
                         <div class="w-1/2">
-                            <jet-label value="Batch" />
-                            <!-- <vue-select 
-                                class="vue_select_box mt-1"
-                                placeholder="Choose a Batch"
-                                :options="batches" 
-                                label="name" 
-                                :disabled="disabledBatches"
-                                :reduce="batch => batch.id" 
+                            <app-label value="Batch" />
+                            <Multiselect
                                 v-model="form.batch"
-                            >
-                            </vue-select>                         -->
-                            <jet-input-error :message="form.errors.batch" class="mt-2" />
+                                :options="batches"
+                                :searchable="true"
+                                :disabled="disabledBatches"
+                                placeholder="Choose a Batch"
+                            /> 
+                            <app-input-error :message="form.errors.batch" class="mt-2" />
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <jet-label for="name" value="Exam Name" />
-                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="e.g. Model Test 01" />
-                        <jet-input-error :message="form.errors.name" class="mt-2" />
+                        <app-label for="name" value="Exam Name" />
+                        <app-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="e.g. Model Test 01" />
+                        <app-input-error :message="form.errors.name" class="mt-2" />
                     </div>
 
                     <div class="mt-6 flex space-x-8">
                         <div class="w-1/2">
                             <div>
-                                <jet-label value="Exam Category" />
-                                <!-- <vue-select 
-                                    class="vue_select_box mt-1"
-                                    placeholder="Choose a Category"
-                                    :options="categories" 
-                                    label="name" 
-                                    :reduce="category => category.id" 
+                                <app-label value="Exam Category" />
+                                <Multiselect
                                     v-model="form.category"
-                                >
-                                </vue-select>                         -->
-                                <jet-input-error :message="form.errors.category" class="mt-2" />
+                                    :options="categories"
+                                    :searchable="true"
+                                    placeholder="Choose a Category"
+                                /> 
+                                <app-input-error :message="form.errors.category" class="mt-2" />
                             </div>
                             <div class="mt-3">
                                 <p class="font-medium text-gray-700">Select Subjects</p>
                                 
                                 <div class="mt-2 flex items-center">
                                     <div class="flex-1">
-                                        <!-- <vue-select 
-                                            class="vue_select_box"
-                                            placeholder="Choose a Subject"
-                                            :disabled="disableSubjectSelection"
-                                            :selectable="subject => !selectedSubjectIs.includes(subject.id)"
-                                            :options="subjects" 
-                                            label="name" 
-                                            :reduce="subject => subject.id" 
+                                        <Multiselect
                                             v-model="subjectId"
-                                        >
-                                        </vue-select>   -->
+                                            :options="subjects"
+                                            :searchable="true"
+                                            placeholder="Choose a Subject"
+                                        /> 
                                     </div>
                                     <div class="ml-2 w-20">
-                                        <jet-input type="number" v-model="noOfQuestion" :disabled="isSelectSubject" class="block w-full text-sm disabled:opacity-50" placeholder="Ex. 10" />
+                                        <app-input type="number" v-model="noOfQuestion" :disabled="isSelectSubject" class="block w-full text-sm disabled:opacity-50" placeholder="Ex. 10" />
                                     </div>
                                     <div class="ml-2">
-                                        <jet-secondary-button @click.native.prevent="addSubject" :disabled="disableSubjectAddButton" class="text-sm disabled:opacity-50">Add</jet-secondary-button>
+                                        <app-secondary-button @click.prevent="addSubject" :disabled="disableSubjectAddButton" class="text-sm disabled:opacity-50">Add</app-secondary-button>
                                     </div>
                                 </div>
                                 <div class="mt-5 w-full h-64 space-y-3 overflow-y-auto">
@@ -90,7 +76,7 @@
                                     </div>
                                     <div v-for="(subject, index) in form.subjects" :key="subject.id" class="flex items-center justify-between">
                                         <div class="flex items-center">
-                                            <button @click.prevent="removeSubject(index)" class="mr-2 inline-flex item-center text-red-400 hover:text-red-600 focus:outline-none">
+                                            <button @click.prevent="removeSubject(index, subject.id)" class="mr-2 inline-flex item-center text-red-400 hover:text-red-600 focus:outline-none">
                                                 <svg class="w-5 h-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                                 </svg>
@@ -102,24 +88,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <jet-input-error :message="form.errors.subjects" class="mt-2" />
+                                <app-input-error :message="form.errors.subjects" class="mt-2" />
                             </div>
                         </div>
 
                         <div class="w-1/2">
                             <div>
-                                <jet-label for="exam_duration" value="Exam Duration" />
-                                <jet-input id="exam_duration" type="number" min="0" class="mt-2 block w-full" v-model="form.exam_duration" placeholder="Exam Duration (in minute)..." />
-                                <jet-input-error :message="form.errors.exam_duration" class="mt-2" />
+                                <app-label for="exam_duration" value="Exam Duration" />
+                                <app-input id="exam_duration" type="number" min="0" class="mt-2 block w-full" v-model="form.exam_duration" placeholder="Exam Duration (in minute)..." />
+                                <app-input-error :message="form.errors.exam_duration" class="mt-2" />
                             </div>
                             <div class="mt-3">
-                                <jet-label for="total_question" value="Total Question" />
-                                <jet-input id="total_question" type="number" min="0" class="mt-2 block w-full" v-model="form.total_question" placeholder="Total Question..." />
-                                <jet-input-error :message="form.errors.total_question" class="mt-2" />
+                                <app-label for="total_question" value="Total Question" />
+                                <app-input id="total_question" type="number" min="0" class="mt-2 block w-full" v-model="form.total_question" placeholder="Total Question..." />
+                                <app-input-error :message="form.errors.total_question" class="mt-2" />
                             </div>
                            
                             <div class="mt-3">
-                                <jet-label for="exam_start_at" value="Exam Started At" />
+                                <app-label for="exam_start_at" value="Exam Started At" />
                                 <!-- <datetime
                                     id="exam_start_at"
                                     type="datetime"
@@ -130,11 +116,12 @@
                                     use12-hour
                                     auto
                                 ></datetime> -->
+                                <app-input id="exam_start_at" type="datetime-local" v-model="form.exam_start_at" />
 
-                                <jet-input-error :message="form.errors.exam_start_at" class="mt-2" />
+                                <app-input-error :message="form.errors.exam_start_at" class="mt-2" />
                             </div>
                             <div class="mt-3">
-                                <jet-label for="exam_end_at" value="Exam Ended At" />
+                                <app-label for="exam_end_at" value="Exam Ended At" />
 
                                 <!-- <datetime
                                     type="datetime"
@@ -145,26 +132,27 @@
                                     use12-hour
                                     auto
                                 ></datetime> -->
-                                <jet-input-error :message="form.errors.exam_end_at" class="mt-2" />
+                                <app-input id="exam_end_at" type="datetime-local" v-model="form.exam_end_at" />
+                                <app-input-error :message="form.errors.exam_end_at" class="mt-2" />
 
                             </div>
                             <div class="mt-3">
                                 <p class="font-medium text-gray-700">Negetive Mark</p>
                                 <div class="mt-3 flex space-x-3 items-center">
                                     <div>
-                                        <jet-label for="negative_mark_status" class="inline-flex items-center cursor-pointer">
+                                        <app-label for="negative_mark_status" class="inline-flex items-center cursor-pointer">
                                             <div class="flex items-center">
-                                                <jet-checkbox name="subjects" id="negative_mark_status" v-model="hasNegativeMark" class="cursor-pointer" />
+                                                <app-checkbox name="subjects" id="negative_mark_status" v-model:checked="hasNegativeMark" class="cursor-pointer" />
 
                                                 <div class="ml-2 text-base font-normal select-none">
                                                     Has Negative Mark
                                                 </div>
                                             </div>
-                                        </jet-label>
+                                        </app-label>
                                     </div>
                                     <div v-if="hasNegativeMark" class="w-1/3">
-                                        <jet-input type="number" min="0" step="0.01" class="block w-full" v-model="negativeMark" placeholder="Negative Mark..." autocomplete="name" />
-                                        <jet-input-error :message="form.errors.negative_mark" class="mt-2" />
+                                        <app-input type="number" min="0" step="0.01" class="block w-full" v-model="negativeMark" placeholder="Negative Mark..." autocomplete="name" />
+                                        <app-input-error :message="form.errors.negative_mark" class="mt-2" />
                                     </div>
                                 </div>
                             </div>
@@ -172,12 +160,12 @@
                     </div>
                    
                     <div class="mt-4">
-                        <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <app-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Save
-                        </jet-button>
-                        <jet-secondary-button @click.native.prevent="goBack">
+                        </app-button>
+                        <app-secondary-button class="ml-2" @click.prevent="goBack">
                             Back
-                        </jet-secondary-button>
+                        </app-secondary-button>
                     </div>
                 </form>
             </div>
@@ -188,29 +176,26 @@
 
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
-    import JetInput from '@/Components/Shared/FormElement/Input'
-    import JetInputError from '@/Components/Shared/FormElement/InputError'
-    import JetLabel from '@/Components/Shared/FormElement/Label'
-    import JetCheckbox from '@/Components/Shared/FormElement/Checkbox'
-    import JetButton from '@/Components/Shared/Button/Button'
-    import JetSecondaryButton from '@/Components/Shared/Button/SecondaryButton'
-    // import VueSelect from 'vue-select'
-    // import { Datetime } from 'vue-datetime'
+    import AppInput from '@/Components/Shared/FormElement/Input'
+    import AppInputError from '@/Components/Shared/FormElement/InputError'
+    import AppLabel from '@/Components/Shared/FormElement/Label'
+    import AppCheckbox from '@/Components/Shared/FormElement/Checkbox'
+    import AppButton from '@/Components/Shared/Button/Button'
+    import AppSecondaryButton from '@/Components/Shared/Button/SecondaryButton'
+    import Multiselect from '@vueform/multiselect'
 
-    // import 'vue-select/dist/vue-select.css'
-    // import 'vue-datetime/dist/vue-datetime.css'
+    import '@vueform/multiselect/themes/default.css'
 
     export default {
         components: {
             AdminLayout,
-            JetInput,
-            JetInputError,
-            JetLabel,
-            JetCheckbox,
-            JetButton,
-            JetSecondaryButton,
-            // VueSelect,
-            // Datetime
+            AppInput,
+            AppInputError,
+            AppLabel,
+            AppCheckbox,
+            AppButton,
+            AppSecondaryButton,
+            Multiselect
         },
         props: {
             courses: Array,
@@ -234,8 +219,8 @@
                     name: '',
                     total_question: null,
                     exam_duration: null,
-                    exam_start_at: new Date(),
-                    exam_end_at: new Date(),
+                    exam_start_at: '',
+                    exam_end_at: '',
                     subjects: [],
                     has_negative_mark: false,
                     negative_mark: null,
@@ -274,21 +259,23 @@
                     return;
                 }
 
-                const subject = this.subjects.find(subject => subject.id == this.subjectId);
+                const subject = this.subjects.find(subject => subject.value == this.subjectId);
 
                 this.form.subjects.push({
-                    id: subject.id,
-                    name: subject.name,
+                    id: subject.value,
+                    name: subject.label,
                     no_of_question: this.noOfQuestion 
                 });
 
-                this.selectedSubjectIs.push(subject.id);
+                this.selectedSubjectIs.push(subject.value);
+                this.subjects.find(subject => subject.value == this.subjectId).disabled = true;
                 this.subjectId = null;
                 this.noOfQuestion = null;
             },
-            removeSubject(index) {
+            removeSubject(index, id) {
                 this.form.subjects.splice(index, 1);
                 this.selectedSubjectIs.splice(index, 1);
+                this.subjects.find(subject => subject.value == id).disabled = false;
             },
             create(){
 
@@ -335,34 +322,3 @@
         }
     }
 </script>
-
-<style scoped>
-    /* .vue_select_box >>> .vs__search::placeholder {
-        color: #394066;
-        font-size: 16px;
-    }
-    .vue_select_box >>> .vs__dropdown-toggle {
-        background: #fff;
-        border: 1px solid #ddd;
-        color: #394066;
-        padding: 7px 5px;
-        font-size: 14px;
-    }
-    .vue_select_box >>> .vs__dropdown-menu {
-        color: #394066;
-        font-size: 14px;
-    }
-
-    .vue_select_box >>> .vs__dropdown-option:hover, 
-    .vue_select_box >>> .vs__dropdown-option--highlight 
-    {
-        background-color: #394066;
-        color: white;
-    }
-
-    .vue_select_box >>> .vs__clear,
-    .vue_select_box >>> .vs__open-indicator {
-        fill: #394066;
-    } */
-
-</style>
