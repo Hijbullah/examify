@@ -1,4 +1,5 @@
 <template>
+    <Head title="All resutls" />
     <student-layout>
         <div class="py-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -23,19 +24,19 @@
                                                     <p>Total Mark: {{ result.total_mark }}</p>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                                    <inertia-link 
+                                                    <Link 
                                                         :href="route('students.results.summary', result.result_code)" 
                                                         class="inline-flex items-center px-2 py-1 bg-gray-900 text-white text-xs uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
                                                     >
                                                         Summary
-                                                    </inertia-link>
+                                                    </Link>
 
-                                                    <inertia-link 
+                                                    <Link 
                                                         :href="route('students.results.details', result.result_code)" 
-                                                        class="inline-flex items-center px-2 py-1 bg-gray-900 text-white text-xs uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
+                                                        class="inline-flex items-center ml-2 px-2 py-1 bg-gray-900 text-white text-xs uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
                                                     >
                                                         Details
-                                                    </inertia-link>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                             <tr v-if="results.data.length === 0">
@@ -43,7 +44,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <pagination v-if="results.data.length" :links="results.links" />
+                                    <pagination :links="results.links" />
                                 </div>
                             </div>
                         </div>
@@ -56,11 +57,14 @@
 
 <script>
     import StudentLayout from '@/Layouts/StudentLayout'
+    import { Head, Link } from '@inertiajs/inertia-vue3'
     import Pagination from '@/Components/Shared/Pagination'
 
     export default {
         components: {
             StudentLayout,
+            Head,
+            Link,
             Pagination
         },
         props: {

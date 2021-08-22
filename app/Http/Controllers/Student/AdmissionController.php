@@ -17,6 +17,10 @@ class AdmissionController extends Controller
             'courses' => Course::where(['admission_status' => true, 'status' => true])
                         ->select('id', 'name')
                         ->get()
+                        ->transform(fn ($course) => [
+                            'value' => $course->id,
+                            'label' => $course->name
+                        ])
         ]); 
     }
 
@@ -30,8 +34,6 @@ class AdmissionController extends Controller
             'phone' => ['required', 'string', 'min:11', 'max:14', 'unique:students'],
             'gender' => ['required'],
             'dob' => ['required'],
-            'guardian_name' => ['required', 'string', 'max:255'],
-            'guardian_phone' => ['required', 'string', 'min:11', 'max:14'],
         ]);
 
         $student = Student::create($data);

@@ -183,8 +183,15 @@ class ExamController extends Controller
     public function edit(Exam $exam)
     {
         return Inertia::render('Admin/Exam/Edit', [
-            'categories' => ExamCategory::all()->map->only('id', 'name'),
-            'subjects' => Subject::all()->map->only('id', 'name'),
+            'subjects' => Subject::select('id', 'name')->get()->transform(fn($subject) => [
+                'value' => $subject->id,
+                'label' => $subject->name,
+                'disabled' => false  
+            ]),
+            'categories' => ExamCategory::select('id', 'name')->get()->transform(fn($category) => [
+                'value' => $category->id,
+                'label' => $category->name  
+            ]),
             'exam' => [
                 'id' => $exam->id,
                 'exam_code' => $exam->exam_code,
@@ -193,8 +200,8 @@ class ExamController extends Controller
                 'category' => $exam->exam_category_id,
                 'total_question' => $exam->total_question,
                 'exam_duration' => $exam->exam_duration,
-                'exam_start_at' => $exam->exam_started_at,
-                'exam_end_at' => $exam->exam_ended_at,
+                'exam_start_at' => $exam->exam_started_at->toDateTimeLocalString(),
+                'exam_end_at' => $exam->exam_ended_at->toDateTimeLocalString(),
                 'subjects' => $exam->subjects,
                 'has_negative_mark' => $exam->has_negative_mark,
                 'negative_mark' => $exam->negative_mark,

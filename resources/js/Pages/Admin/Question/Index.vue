@@ -54,7 +54,6 @@
     import AdminLayout from '@/Layouts/AdminLayout'
     import { Link } from '@inertiajs/inertia-vue3'
     import SingleQuestion from './Partials/Question'
-    import 'katex/dist/katex.min.css'
 
     export default {
         components: {

@@ -66,6 +66,7 @@ class StudentController extends Controller
     public function showApplication($id)
     {
         $application = Student::where(['id' => $id, 'is_approved' => false])->with('course:id,name')->firstOrFail();
+        $application['application_date'] = $application->created_at->diffForHumans();
         return Inertia::render('Admin/Application/Show', [
             'application' => $application,
             'batches' => Batch::where('course_id', $application->course->id)->select('id', 'name')->get()

@@ -18,19 +18,15 @@
                         </div>
                     </div>
                     <div class="w-1/2">
-                        <h4 class="text-sm font-bold uppercase tracking-wider">Guardian's Info</h4>
+                        <h4 class="text-sm font-bold uppercase tracking-wider">Course and Batch</h4>
                         <div class="mt-3">
-                            <p>Name: {{ student.guardian_name }}</p>
-                            <p>Phone: {{ student.guardian_phone }}</p>
+                           <p class="text-xl font-bold">Course: {{ student.course.name }}</p>
+                        <p class="text-xl font-bold">Batch: {{ student.batch.name }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-4">
-                    <p class="text-xl font-bold">Course: {{ student.course.name }}</p>
-                    <p class="text-xl font-bold">Batch: {{ student.batch.name }}</p>
-                </div>
-                <div class="mt-4">
-                    <app-secondary-button @click.native.prevent="goBack">
+                    <app-secondary-button @click.prevent="goBack">
                         Back
                     </app-secondary-button>
                 </div>

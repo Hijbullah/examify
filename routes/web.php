@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\Student\ExamController;
+use App\Http\Controllers\Student\ResultController;
+use App\Http\Controllers\Student\ProfileController;
+use App\Http\Controllers\Student\AdmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,14 +47,6 @@ Route::prefix('students')->name('students.')->middleware('auth')->group(function
         return Inertia::render('Student/Dashboard');
     })->name('dashboard');
 
-    Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
-    Route::get('/classes/{schedule:class_id}', [ClassController::class, 'show'])->name('classes.show');
-    Route::get('/classes/{class_id}/live', [ClassController::class, 'join'])->name('classes.join');
-    
-    // lecturesheets
-    Route::get('/lecture-sheets', [LectureSheetController::class, 'index'])->name('lectureSheets.index');
-    Route::get('/lecture-sheets/{lectureSheet}/download', [LectureSheetController::class, 'download'])->name('lectureSheets.download');
-
     //exams
     Route::get('/exams', [ExamController::class, 'index'])->name('exams.index');
     Route::get('/exams/{exam:exam_code}', [ExamController::class, 'startExam'])->name('exams.start');
@@ -65,7 +61,5 @@ Route::prefix('students')->name('students.')->middleware('auth')->group(function
     Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show');
     Route::put('/password/update', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
-
-require __DIR__.'/auth.php';
 
 require __DIR__.'/auth.php';

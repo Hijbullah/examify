@@ -10,13 +10,8 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\ImageUploaderController;
 use App\Http\Controllers\Admin\QuestionController;
-use App\Http\Controllers\Admin\ScheduleController;
-use App\Http\Controllers\Admin\LiveClassController;
-use App\Http\Controllers\Teacher\ProfileController;
 use App\Http\Controllers\Admin\ExamCategoryController;
-use App\Http\Controllers\Admin\LectureSheetController;
 use App\Http\Controllers\Admin\ResultController;
-use App\Http\Controllers\Teacher\ClassScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,11 +42,6 @@ Route::middleware(['auth', 'verified'])->group(function() {
             'batch' => 'slug',
         ]);
         Route::resource('subjects', SubjectController::class);
-        Route::resource('schedules', ScheduleController::class);
-        // Route::get('/get-batches/{courseId}', [ScheduleController::class, 'getBatches']);
-
-        //lecture sheet
-        Route::resource('lecture-sheets', LectureSheetController::class);
 
         Route::get('/students', [StudentController::class, 'allStudents'])->name('students.index');
         Route::get('/students/{student}', [StudentController::class, 'showStudent'])->name('students.show');
@@ -60,7 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::get('/applications/{application}', [StudentController::class, 'showApplication'])->name('applications.show');
         Route::post('/applications/{application}', [StudentController::class, 'confirmApplication'])->name('applications.confirm');
         
-        Route::resource('users', UserController::class); // admin and teacher
+        Route::resource('users', UserController::class); // admin
 
         Route::resource('exam-categories', ExamCategoryController::class);
 
@@ -91,14 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     });
 
-    Route::get('/notes/{schedule}/download-all', [ClassScheduleController::class, 'downloadAllNotes'])->name('notes.download.all');
-    Route::get('/notes/{media}/download-single', [ClassScheduleController::class, 'downloadSingleNote'])->name('notes.download.single');
-    
-    Route::get('/live/{class}/start', [LiveClassController::class, 'startClass'])->name('class.live.start');
-    Route::post('/live-class-update/{classId}', [LiveClassController::class, 'updateLiveClass'])->name('class.live.update');
-    Route::post('/live-class-end/{classId}', [LiveClassController::class, 'endLiveClass'])->name('class.live.end');
-
-    // image uploader
+    // image uploader for tynimce
     Route::post('images/upload', [ImageUploaderController::class, 'uploadImage'])->name('images.upload');
 }); 
 

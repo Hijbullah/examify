@@ -44,7 +44,7 @@
                             </td>
                         </tr>
                         <tr v-if="applications.data.length === 0">
-                            <td class="border-t px-6 py-4" colspan="4">No New Applications found.</td>
+                            <td class="border-t px-6 py-4" colspan="5">No New Applications found.</td>
                         </tr>
                     
                     </table>

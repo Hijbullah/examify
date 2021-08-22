@@ -81,8 +81,6 @@
 <script>
     import StudentLayout from '@/Layouts/StudentLayout'
     import TheTimer from './TheTimer'
-    import 'katex/dist/katex.min.css'
-    // import 'vue2-editor/dist/vue2-editor.css'
 
 
     export default {
@@ -156,7 +154,7 @@
             },
 
             finishExam() {
-                this.removeStartEventListener();
+                // this.removeStartEventListener();
                 this.form.post(route('students.exams.finish', this.exam.exam_code));
             },
 
@@ -172,6 +170,12 @@
                 } else {
                     question.cssClass = 'bg-yellow-600 text-white';
                 }
+            },
+            preventNav() {
+                if (document.visibilityState === 'hidden') {
+                    this.finishExam();
+                }
+                
             }
         },
 
@@ -184,20 +188,21 @@
 
             this.questionData = Array.from(this.questions).reverse();
             this.currenQuestion = this.questionData.pop();
+        },
 
-            this.$once(
-                'hook:destroyed',
-                this.removeStartEventListener = this.$inertia.on('start', (event) => {
-                    if (!confirm('Want to navigate away, Are you sure? Your exam will end autometically')) {
-                        event.preventDefault();
-                    }
-                })
-            );
+        beforeMount() {
+            document.addEventListener("visibilitychange", this.preventNav);
 
-            // document.addEventListener("visibilitychange", this.logSomething)
-            //     this.$once("hook:beforeDestroy", () => {
-            //     document.removeEventListener("visibilitychange", this.logSomething);
-            // });
+            this.removeStartEventListener = this.$inertia.on('before', (event) => {
+                if (!confirm('Are you sure you want to navigate away?')) {
+                    event.preventDefault()
+                }
+            });
+        },
+
+        beforeUnmount() {
+            document.removeEventListener("visibilitychange", this.preventNav);
+            this.removeStartEventListener();
         },
         
     }

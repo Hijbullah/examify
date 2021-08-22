@@ -70,7 +70,7 @@ class ExamController extends Controller
         //check already take the exam
         if(Result::where(['user_id' => Auth::id(), 'exam_id' => $exam->id])->exists()) 
         {
-            return 'already taken';
+            return Redirect::route('students.results.index');
         }
 
         //create the initial result data

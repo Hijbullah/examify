@@ -1,99 +1,52 @@
 <template>
-    <div class="editor-wrapper bg-white" :class="as">
-        <vue-editor 
-            ref="vue2editor"
-            :customModules="customModulesForEditor"
-            :editorOptions="editorSettings"
-            v-model="editorContent"
-            useCustomImageHandler
-            @image-added="handleImageAdded"
-            :editor-toolbar="customToolbar"
-        ></vue-editor>
-    </div>
+   
+    <editor
+        v-model="editorContent"
+        class="bg-white px-4 py-6 border-2 border-gray-600"
+        api-key="jzss5lx0xus0qk2ujd67ma86css4jujfayislylc1mirow44"
+        :init="{
+            toolbar: false,
+            menubar: false,
+            inline: true,
+            plugins: [
+                'autolink',
+                'link',
+                'lists',
+                'media',
+                'image',
+                'imagetools',
+                'quickbars',
+            ],
+           
+            automatic_uploads: true,
+            images_reuse_filename: true,
+            images_upload_url: route('images.upload'),
+            
+            quickbars_insert_toolbar: 'image media',
+            quickbars_selection_toolbar: 'bold italic underline | formatselect | blockquote quicklink',
+        }"
+    />
+
+    
 </template>
 
 <script>
-    import { VueEditor } from 'vue2-editor'
-    import BlotFormatter from 'quill-blot-formatter'
-    import katex from 'katex'
-    import 'katex/dist/katex.min.css'
- 
+    import Editor from '@tinymce/tinymce-vue'
 
     export default {
         components: {
-            VueEditor
+            'editor': Editor
         },
         props: {
-            content: String,
-            as: String
+            editorContent: String
         },
-        data() {
-            return {
-                customToolbar: [
-                    [{ 'size': ['small', false, 'large'] }],
-                    ['bold', 'italic', 'underline'],
-                    [
-                        { align: "" },
-                        { align: "center" },
-                        { align: "right" },
-                        { align: "justify" }
-                    ],
-                    ['image', 'formula'],   
-                ],
-                customModulesForEditor: [
-                    { alias: 'blotFormatter', module: BlotFormatter }, 
-                ],
-                editorSettings: {
-                    modules: {
-                        blotFormatter: {},
-                    }
-                }
-            }
-        },
-        computed: {
-            editorContent: {
-                get() { return this.content},
-                set(updatedContent) { this.$emit('update:content', updatedContent) }
-            },
-        },
-        methods: {
-            handleImageAdded(file, Editor, cursorLocation) {
-                const CLIENT_ID = '993793b1d8d3e2e'
-                var formData = new FormData();
-                formData.append('file', file);
+        emits: ['update:editorContent'],
 
-                axios.post(route('images.upload'), formData)
-                    .then(({ data }) => {
-                        Editor.insertEmbed(cursorLocation, 'image', data.url);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });  
+        watch: {
+            editorContent(value) {
+                this.$emit('update:editorContent', value);
             }
-        },
-        mounted() {
-            window.katex = katex;
         }
-    };
-</script>
 
-<style scoped>
-    .editor-wrapper.question :deep(.ql-editor) {
-		min-height: 125px;
-	}
-    .editor-wrapper.options :deep(.ql-editor) {
-		height: 80px;
-		min-height: 80px;
-        overflow-y: auto;
-	}
-   
-    .editor-wrapper :deep(.ql-snow .ql-tooltip[data-mode="formula"]) {
-        top: 5px !important;
-        left: 50% !important;
-        transform: translateX(-50%);
     }
-    .editor-wrapper :deep(.ql-snow .ql-tooltip[data-mode="formula"] input[type=text]) {
-        height: 50px;
-        width: 210px;
-    }
-</style>
+</script>

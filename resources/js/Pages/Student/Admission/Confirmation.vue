@@ -1,9 +1,11 @@
 <template>
+    <Head title="Admission Confirmation" />
+    
     <div class="min-h-screen flex flex-col sm:justify-center items-center py-6 bg-gray-100">
         <div>
-            <inertia-link href="/">
+            <Link href="/">
                 <application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </inertia-link>
+            </Link>
         </div>
 
         <div class="w-full sm:max-w-xl mt-6 px-6 py-4 bg-white shadow overflow-hidden sm:rounded">
@@ -11,13 +13,13 @@
             <p>When accepted, you can login with your email and password will be you phone number.</p>
             <p>After login, you can change your password.</p>
             <div class="mt-5 space-x-5">
-                <inertia-link href="/" class="underline text-sm font-bold text-gray-600 hover:text-gray-900">
+                <Link href="/" class="underline text-sm font-bold text-gray-600 hover:text-gray-900">
                         Back to Home
-                </inertia-link>
+                </Link>
 
-                <inertia-link :href="route('login')" class="underline text-sm font-bold text-gray-600 hover:text-gray-900">
+                <Link :href="route('login')" class="underline text-sm font-bold text-gray-600 hover:text-gray-900">
                     Login
-                </inertia-link>
+                </Link>
             </div>
         </div>
     </div>
@@ -25,10 +27,13 @@
 
 <script>
     import ApplicationLogo from '@/Components/Shared/ApplicationLogo'
+    import { Head, Link } from "@inertiajs/inertia-vue3"
 
     export default {
         components: {
             ApplicationLogo,
+            Head,
+            Link
         },
 
         props: {

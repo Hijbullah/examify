@@ -41,7 +41,7 @@
                        <p>Course: {{ exam.batch.course.name }}</p>
                        <p>Batch: {{ exam.batch.name }}</p>
                        <p>Category: {{ exam.category.name }}</p>
-                       <p>Questions: {{ exam.questions_count }}/{{ exam.total_question }}</p>
+                       <p class="text-xl font-bold">Questions: {{ exam.questions_count }}/{{ exam.total_question }}</p>
                        <p>Duration: {{ exam.exam_duration }} min</p>
                        <p v-if="exam.has_negative_mark">Negetive Mark: {{ exam.negative_mark }}</p>
                    </div>

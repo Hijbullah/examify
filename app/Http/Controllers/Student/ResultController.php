@@ -18,12 +18,12 @@ class ResultController extends Controller
                     ->latest()
                     ->select('id', 'result_code', 'exam_category', 'exam_name', 'total_mark', 'updated_at')
                     ->paginate(10)
-                    ->transform(function($result) {
+                    ->through(function($result) {
                         return [
                             'id' => $result->id,
                             'result_code' => $result->result_code,
                             'exam' => $result->exam_category . ': ' . $result->exam_name,
-                            'total_mark' => $result->total_mark,
+                            'total_mark' => $result->total_mark ?? 'exam cancelled',
                             'exam_taken_at' => $result->updated_at->format('d/m/Y h:i A')
                         ];
                     })

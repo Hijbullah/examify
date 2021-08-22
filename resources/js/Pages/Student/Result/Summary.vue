@@ -17,20 +17,20 @@
                         <p>Details result will be published after exam Schedule.</p>
                     </div>
                     <div class="mt-6">
-                        <inertia-link 
+                        <Link 
                             v-if="result.is_published"
                             :href="route('students.results.details', result.result_code)" 
                             class="inline-flex items-center px-3 py-2 bg-gray-900 text-white text-sm uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
                         >
                             Details Result
-                        </inertia-link>
+                        </Link>
 
-                        <inertia-link 
+                        <Link 
                             :href="route('students.results.index')" 
                             class="inline-flex items-center px-3 py-2 bg-gray-900 text-white text-sm uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
                         >
                            Back To All Results
-                        </inertia-link>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -40,10 +40,13 @@
 
 <script>
     import StudentLayout from '@/Layouts/StudentLayout'
+    import { Head, Link } from '@inertiajs/inertia-vue3'
 
     export default {
         components: {
-            StudentLayout
+            StudentLayout,
+            Head,
+            Link
         },
         props: {
             result: Object

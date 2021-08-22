@@ -5,7 +5,7 @@
 
             <div class="mt-5">
                 <div class="flex px-5 py-6 bg-white">
-                    <div class="w-1/2">
+                    <div>
                         <h4 class="text-sm font-bold uppercase tracking-wider">Student's Info</h4>
                         <div class="mt-3">
                             <p>First Name: {{ application.first_name }}</p>
@@ -14,14 +14,7 @@
                             <p>Phone: {{ application.phone }}</p>
                             <p>Gender: {{ application.gender }}</p>
                             <p>Date of Birth: {{ application.dob }}</p>
-                            <p>Application Date: {{ application.created_at }}</p>
-                        </div>
-                    </div>
-                    <div class="w-1/2">
-                        <h4 class="text-sm font-bold uppercase tracking-wider">Guardian's Info</h4>
-                        <div class="mt-3">
-                            <p>Name: {{ application.guardian_name }}</p>
-                            <p>Phone: {{ application.guardian_phone }}</p>
+                            <p>Application Date: {{ application.application_date }}</p>
                         </div>
                     </div>
                 </div>
@@ -29,16 +22,16 @@
                     <p class="text-xl font-bold">Requested Course: {{ application.course.name }}</p>
                 </div>
                 <div class="mt-4">
-                    <jet-button @click.native.prevent="approveStudent">
+                    <app-button @click.prevent="approveStudent">
                         Approve
-                    </jet-button>
-                    <jet-secondary-button @click.native.prevent="goBack">
+                    </app-button>
+                    <app-secondary-button class="ml-2" @click.prevent="goBack">
                         Back
-                    </jet-secondary-button>
+                    </app-secondary-button>
                 </div>
             </div>
             <!--approval Modal -->
-            <jet-dialog-modal :show="showApprovalModal" @close="closeModal">
+            <app-dialog-modal :show="showApprovalModal" @close="closeModal">
                 <template #title>
                     Student Approval
                 </template>
@@ -59,31 +52,31 @@
                 </template>
 
                 <template #footer>
-                   <jet-button @click.native.prevent="confirmApproval" v-if="batches.length" class="mr-2">
+                   <app-button @click.prevent="confirmApproval" v-if="batches.length" class="mr-2">
                         Confirm
-                    </jet-button>
+                    </app-button>
 
-                    <jet-secondary-button @click.native="closeModal">
+                    <app-secondary-button @click.prevent="closeModal">
                         Nevermind
-                    </jet-secondary-button>
+                    </app-secondary-button>
                 </template>
-            </jet-dialog-modal>
+            </app-dialog-modal>
         </div>
     </admin-layout>
 </template>
 
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
-    import JetButton from '@/Components/Shared/Button/Button'
-    import JetSecondaryButton from '@/Components/Shared/Button/SecondaryButton'
-    import JetDialogModal from '@/Components/Shared/Modal/DialogModal'
+    import AppButton from '@/Components/Shared/Button/Button'
+    import AppSecondaryButton from '@/Components/Shared/Button/SecondaryButton'
+    import AppDialogModal from '@/Components/Shared/Modal/DialogModal'
 
     export default {
         components: {
             AdminLayout,
-            JetButton,
-            JetSecondaryButton,
-            JetDialogModal
+            AppButton,
+            AppSecondaryButton,
+            AppDialogModal
         },
 
         props: {

@@ -12,7 +12,6 @@ class ResultController extends Controller
     public function showExamResults(Exam $exam)
     {
         return Inertia::render('Admin/Result/Index', [
-            'filters' => request()->all('search'),
             'exam' => [
                 'id' => $exam->id,
                 'exam_code' => $exam->exam_code,
@@ -28,6 +27,11 @@ class ResultController extends Controller
                             'id', 
                             'result_code', 
                             'user_id', 
+                            'total_answered',
+                            'total_question',
+                            'correct_answer',
+                            'wrong_answer',
+                            'negative_mark',
                             'total_mark',
                             'position',
                             'updated_at'
@@ -35,10 +39,15 @@ class ResultController extends Controller
                         ->with('student:id,first_name,last_name')
                         ->orderBy('position', 'asc')
                         ->paginate(10)
-                        ->transform(function($result) {
+                        ->through(function($result) {
                             return [
                                 'id' => $result->id,
                                 'result_code' => $result->result_code,
+                                'total_answered' => $result->total_answered,
+                                'total_question' => $result->total_question,
+                                'correct_answer' => $result->correct_answer,
+                                'wrong_answer' => $result->wrong_answer,
+                                'negative_mark' => $result->negative_mark,
                                 'total_mark' => $result->total_mark,
                                 'position' => $result->position,
                                 'exam_taken_at' => $result->updated_at->format('d/m/Y h:i A'),

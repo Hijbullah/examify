@@ -56,6 +56,7 @@
                                             v-model="subjectId"
                                             :options="subjects"
                                             :searchable="true"
+                                            :disabled="disableSubjectSelection"
                                             placeholder="Choose a Subject"
                                         /> 
                                     </div>
@@ -106,32 +107,11 @@
                            
                             <div class="mt-3">
                                 <app-label for="exam_start_at" value="Exam Started At" />
-                                <!-- <datetime
-                                    id="exam_start_at"
-                                    type="datetime"
-                                    v-model="form.exam_start_at"
-                                    :week-start="6"
-                                    value-zone="Asia/Dhaka"
-                                    input-class="mt-2 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                                    use12-hour
-                                    auto
-                                ></datetime> -->
                                 <app-input id="exam_start_at" type="datetime-local" v-model="form.exam_start_at" />
-
                                 <app-input-error :message="form.errors.exam_start_at" class="mt-2" />
                             </div>
                             <div class="mt-3">
                                 <app-label for="exam_end_at" value="Exam Ended At" />
-
-                                <!-- <datetime
-                                    type="datetime"
-                                    v-model="form.exam_end_at"
-                                    :week-start="6"
-                                    value-zone="Asia/Dhaka"
-                                    input-class="mt-2 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                                    use12-hour
-                                    auto
-                                ></datetime> -->
                                 <app-input id="exam_end_at" type="datetime-local" v-model="form.exam_end_at" />
                                 <app-input-error :message="form.errors.exam_end_at" class="mt-2" />
 
