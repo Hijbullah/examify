@@ -21,6 +21,10 @@ class Result extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    protected $casts = [
+        'exam_meta_data' => 'array',
+    ];
+
     // public function scopeFilter($query, array $filters)
     // {
     //     $query->when($filters['search'] ?? null, function ($query, $search) {

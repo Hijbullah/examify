@@ -55,7 +55,27 @@ class ResultController extends Controller
         }
 
         return Inertia::render('Student/Result/Details', [
-            'result' => $result
+            'result' => [
+                'id' => $result->id,
+                'result_code' => $result->result_code,
+                'total_question' => $result->total_question,
+                'correct_answer' => $result->correct_answer,
+                'wrong_answer' => $result->wrong_answer,
+                'negative_mark' => $result->negative_mark,
+                'total_mark' => $result->total_mark,
+                'position' => $result->position,
+                'exam' => [
+                    'name' => $result->exam_name,
+                    'category' => $result->exam_category
+                ],
+                'questions' => collect($result->exam_meta_data)->transform(fn ($question) => [
+                    'subject' => $question['subject'],
+                    'question' => $question['question'],
+                    'options' => $question['options'],
+                    'correct_answer' => $question['answer'],
+                    'selected_answer' => $question['selectedAnswer']
+                ])
+            ]
         ]);
     
     }

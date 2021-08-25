@@ -27,7 +27,7 @@
 
                         <Link 
                             :href="route('students.results.index')" 
-                            class="inline-flex items-center px-3 py-2 bg-gray-900 text-white text-sm uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
+                            class="inline-flex items-center ml-2 px-3 py-2 bg-gray-900 text-white text-sm uppercase tracking-widest rounded hover:bg-gray-700 focus:outline-none"
                         >
                            Back To All Results
                         </Link>
